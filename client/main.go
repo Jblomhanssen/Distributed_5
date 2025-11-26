@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	serverAddr := flag.String("server", "localhost:5000", "primary server address")
+	serverAddr := flag.String("server", "localhost:5001", "primary server address")
 	flag.Parse()
 
 	client, err := NewAuctionClient(*serverAddr)

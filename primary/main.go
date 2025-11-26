@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	port := flag.Int("port", 5000, "primary server port")
-	backupAddr := flag.String("backup", "localhost:5001", "backup server address")
+	port := flag.Int("port", 5001, "primary server port")
+	backupAddr := flag.String("backup", "localhost:5002", "backup server address")
 	flag.Parse()
 
 	primaryServer, err := NewPrimaryServer(*backupAddr)

@@ -16,25 +16,27 @@ go build -o bin/client ./client
 
 ## Running the System
 
+**Note:** Port 5000 is often used by macOS ControlCenter, so we use 5001 and 5002.
+
 ### Terminal 1: Start Backup
 ```bash
-go run backup/main.go -port 5001
+go run backup/*.go -port 5002
 ```
 
 ### Terminal 2: Start Primary
 ```bash
-go run primary/main.go -port 5000 -backup localhost:5001
+go run primary/*.go -port 5001 -backup localhost:5002
 ```
 
 ### Terminal 3: Run Client
 ```bash
-go run client/main.go -server localhost:5000
+go run client/*.go -server localhost:5001
 ```
 
 ## System Architecture
 
-- **Primary (port 5000)**: Handles client requests, executes operations, replicates to backup
-- **Backup (port 5001)**: Receives updates from primary, maintains identical state
+- **Primary (port 5001)**: Handles client requests, executes operations, replicates to backup
+- **Backup (port 5002)**: Receives updates from primary, maintains identical state
 - **Client**: Sends bids and queries to primary
 
 ## Replication Protocol

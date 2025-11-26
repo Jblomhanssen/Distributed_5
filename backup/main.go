@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	port := flag.Int("port", 5001, "backup server port")
+	port := flag.Int("port", 5002, "backup server port")
 	flag.Parse()
 
 	backupServer := NewBackupServer(time.Now())
