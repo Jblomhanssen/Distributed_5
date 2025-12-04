@@ -83,7 +83,7 @@ func (s *BackupServer) ReplicateUpdate(ctx context.Context, req *pb.UpdateReques
 	s.heartbeatMutex.Unlock()
 
 	// Check for duplicate
-	if cachedResponse, exists := s.processedRequests[req.RequestId]; exists {
+	if _, exists := s.processedRequests[req.RequestId]; exists {
 		log.Printf("Duplicate update %s, acknowledging with cached response", req.RequestId)
 		return &pb.UpdateResponse{Acknowledged: true}, nil
 	}

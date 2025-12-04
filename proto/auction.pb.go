@@ -487,6 +487,86 @@ func (x *UpdateResponse) GetAcknowledged() bool {
 	return false
 }
 
+type HeartbeatRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HeartbeatRequest) Reset() {
+	*x = HeartbeatRequest{}
+	mi := &file_proto_auction_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HeartbeatRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HeartbeatRequest) ProtoMessage() {}
+
+func (x *HeartbeatRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auction_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HeartbeatRequest.ProtoReflect.Descriptor instead.
+func (*HeartbeatRequest) Descriptor() ([]byte, []int) {
+	return file_proto_auction_proto_rawDescGZIP(), []int{6}
+}
+
+type HeartbeatResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Alive         bool                   `protobuf:"varint,1,opt,name=alive,proto3" json:"alive,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HeartbeatResponse) Reset() {
+	*x = HeartbeatResponse{}
+	mi := &file_proto_auction_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HeartbeatResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HeartbeatResponse) ProtoMessage() {}
+
+func (x *HeartbeatResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auction_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HeartbeatResponse.ProtoReflect.Descriptor instead.
+func (*HeartbeatResponse) Descriptor() ([]byte, []int) {
+	return file_proto_auction_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *HeartbeatResponse) GetAlive() bool {
+	if x != nil {
+		return x.Alive
+	}
+	return false
+}
+
 var File_proto_auction_proto protoreflect.FileDescriptor
 
 const file_proto_auction_proto_rawDesc = "" +
@@ -515,7 +595,10 @@ const file_proto_auction_proto_rawDesc = "" +
 	"\tclient_id\x18\x04 \x01(\tR\bclientId\x12*\n" +
 	"\aoutcome\x18\x05 \x01(\x0e2\x10.auction.OutcomeR\aoutcome\"4\n" +
 	"\x0eUpdateResponse\x12\"\n" +
-	"\facknowledged\x18\x01 \x01(\bR\facknowledged*/\n" +
+	"\facknowledged\x18\x01 \x01(\bR\facknowledged\"\x12\n" +
+	"\x10HeartbeatRequest\")\n" +
+	"\x11HeartbeatResponse\x12\x14\n" +
+	"\x05alive\x18\x01 \x01(\bR\x05alive*/\n" +
 	"\aOutcome\x12\v\n" +
 	"\aSUCCESS\x10\x00\x12\b\n" +
 	"\x04FAIL\x10\x01\x12\r\n" +
@@ -529,9 +612,10 @@ const file_proto_auction_proto_rawDesc = "" +
 	"\x03BID\x10\x002}\n" +
 	"\x0eAuctionService\x120\n" +
 	"\x03Bid\x12\x13.auction.BidRequest\x1a\x14.auction.BidResponse\x129\n" +
-	"\x06Result\x12\x16.auction.ResultRequest\x1a\x17.auction.ResultResponse2X\n" +
+	"\x06Result\x12\x16.auction.ResultRequest\x1a\x17.auction.ResultResponse2\x9c\x01\n" +
 	"\x12ReplicationService\x12B\n" +
-	"\x0fReplicateUpdate\x12\x16.auction.UpdateRequest\x1a\x17.auction.UpdateResponseB4Z2github.com/joachimblom-hanssen/Distributed_5/protob\x06proto3"
+	"\x0fReplicateUpdate\x12\x16.auction.UpdateRequest\x1a\x17.auction.UpdateResponse\x12B\n" +
+	"\tHeartbeat\x12\x19.auction.HeartbeatRequest\x1a\x1a.auction.HeartbeatResponseB4Z2github.com/joachimblom-hanssen/Distributed_5/protob\x06proto3"
 
 var (
 	file_proto_auction_proto_rawDescOnce sync.Once
@@ -546,34 +630,38 @@ func file_proto_auction_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_auction_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_proto_auction_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_auction_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_proto_auction_proto_goTypes = []any{
-	(Outcome)(0),           // 0: auction.Outcome
-	(AuctionStatus)(0),     // 1: auction.AuctionStatus
-	(UpdateType)(0),        // 2: auction.UpdateType
-	(*BidRequest)(nil),     // 3: auction.BidRequest
-	(*BidResponse)(nil),    // 4: auction.BidResponse
-	(*ResultRequest)(nil),  // 5: auction.ResultRequest
-	(*ResultResponse)(nil), // 6: auction.ResultResponse
-	(*UpdateRequest)(nil),  // 7: auction.UpdateRequest
-	(*UpdateResponse)(nil), // 8: auction.UpdateResponse
+	(Outcome)(0),              // 0: auction.Outcome
+	(AuctionStatus)(0),        // 1: auction.AuctionStatus
+	(UpdateType)(0),           // 2: auction.UpdateType
+	(*BidRequest)(nil),        // 3: auction.BidRequest
+	(*BidResponse)(nil),       // 4: auction.BidResponse
+	(*ResultRequest)(nil),     // 5: auction.ResultRequest
+	(*ResultResponse)(nil),    // 6: auction.ResultResponse
+	(*UpdateRequest)(nil),     // 7: auction.UpdateRequest
+	(*UpdateResponse)(nil),    // 8: auction.UpdateResponse
+	(*HeartbeatRequest)(nil),  // 9: auction.HeartbeatRequest
+	(*HeartbeatResponse)(nil), // 10: auction.HeartbeatResponse
 }
 var file_proto_auction_proto_depIdxs = []int32{
-	0, // 0: auction.BidResponse.outcome:type_name -> auction.Outcome
-	1, // 1: auction.ResultResponse.status:type_name -> auction.AuctionStatus
-	2, // 2: auction.UpdateRequest.type:type_name -> auction.UpdateType
-	0, // 3: auction.UpdateRequest.outcome:type_name -> auction.Outcome
-	3, // 4: auction.AuctionService.Bid:input_type -> auction.BidRequest
-	5, // 5: auction.AuctionService.Result:input_type -> auction.ResultRequest
-	7, // 6: auction.ReplicationService.ReplicateUpdate:input_type -> auction.UpdateRequest
-	4, // 7: auction.AuctionService.Bid:output_type -> auction.BidResponse
-	6, // 8: auction.AuctionService.Result:output_type -> auction.ResultResponse
-	8, // 9: auction.ReplicationService.ReplicateUpdate:output_type -> auction.UpdateResponse
-	7, // [7:10] is the sub-list for method output_type
-	4, // [4:7] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0,  // 0: auction.BidResponse.outcome:type_name -> auction.Outcome
+	1,  // 1: auction.ResultResponse.status:type_name -> auction.AuctionStatus
+	2,  // 2: auction.UpdateRequest.type:type_name -> auction.UpdateType
+	0,  // 3: auction.UpdateRequest.outcome:type_name -> auction.Outcome
+	3,  // 4: auction.AuctionService.Bid:input_type -> auction.BidRequest
+	5,  // 5: auction.AuctionService.Result:input_type -> auction.ResultRequest
+	7,  // 6: auction.ReplicationService.ReplicateUpdate:input_type -> auction.UpdateRequest
+	9,  // 7: auction.ReplicationService.Heartbeat:input_type -> auction.HeartbeatRequest
+	4,  // 8: auction.AuctionService.Bid:output_type -> auction.BidResponse
+	6,  // 9: auction.AuctionService.Result:output_type -> auction.ResultResponse
+	8,  // 10: auction.ReplicationService.ReplicateUpdate:output_type -> auction.UpdateResponse
+	10, // 11: auction.ReplicationService.Heartbeat:output_type -> auction.HeartbeatResponse
+	8,  // [8:12] is the sub-list for method output_type
+	4,  // [4:8] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_proto_auction_proto_init() }
@@ -587,7 +675,7 @@ func file_proto_auction_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_auction_proto_rawDesc), len(file_proto_auction_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
