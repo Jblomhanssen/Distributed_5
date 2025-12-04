@@ -11,6 +11,7 @@ service AuctionService {
 
 service ReplicationService {
   rpc ReplicateUpdate(UpdateRequest) returns (UpdateResponse);
+  rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
 }
 
 message BidRequest {
@@ -57,4 +58,10 @@ enum AuctionStatus {
 
 enum UpdateType {
   BID = 0;
+}
+
+message HeartbeatRequest {}
+
+message HeartbeatResponse {
+  bool alive = 1;
 }

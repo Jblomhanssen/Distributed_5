@@ -26,11 +26,32 @@ func NewPrimaryServer(backupAddress string) (*PrimaryServer, error) {
 		return nil, fmt.Errorf("failed to connect to backup: %v", err)
 	}
 
-	return &PrimaryServer{
+	s := &PrimaryServer{
 		auctionState:      auction.NewAuction(time.Now()),
 		processedRequests: make(map[string]*pb.BidResponse),
 		backupClient:      pb.NewReplicationServiceClient(conn),
-	}, nil
+	}
+	
+	// Start sending periodic heartbeats
+	go s.sendHeartbeats()
+	
+	return s, nil
+}
+
+// sendHeartbeats sends periodic heartbeat messages to backup
+func (s *PrimaryServer) sendHeartbeats() {
+	ticker := time.NewTicker(2 * time.Second)
+	defer ticker.Stop()
+	
+	for range ticker.C {
+		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+		_, err := s.backupClient.Heartbeat(ctx, &pb.HeartbeatRequest{})
+		cancel()
+		
+		if err != nil {
+			log.Printf("Failed to send heartbeat to backup: %v", err)
+		}
+	}
 }
 
 func (s *PrimaryServer) Bid(ctx context.Context, req *pb.BidRequest) (*pb.BidResponse, error) {
